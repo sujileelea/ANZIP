@@ -9,10 +9,14 @@ import SwiftUI
 
 struct CollectPage: View {
     
+    @State var review: Review = Review()
+    @State var isPostingData = false
+
     @State var selectedScore: Int = 0
     @State var content: String = ""
     
     @Binding var showEvaluationSheet: Bool
+
     var body: some View {
         VStack(alignment: .leading) {
             //헤더
@@ -97,6 +101,36 @@ struct CollectPage: View {
             })
         })
     }
+    
+    func postDataFromServer() {
+            // 비동기적으로 데이터를 가져오는 중임을 표시
+            isPostingData = true
+        
+           // 실제 서버 URL을 사용하려면 여기에 해당 URL을 입력하세요.
+           let serverURL = URL(string: "https://example.com/api")!
+
+           // POST 요청을 위한 URLRequest 생성
+           var request = URLRequest(url: serverURL)
+           request.httpMethod = "POST"
+
+           // JSON 데이터를 생성하여 요청 바디에 추가
+            do {
+                let jsonData = try JSONEncoder().encode(review)
+                request.httpBody = jsonData
+                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            } catch {
+            }
+
+           // 서버로 요청을 보내고 응답 처리
+           URLSession.shared.dataTask(with: request) { data, response, error in
+               if let data = data {
+                   print("데이터 수집 완ㄹ")
+               } else if let error = error {
+                   print("Error sending POST request: \(error)")
+               }
+           }.resume()
+       }
+
 }
 
 #Preview {

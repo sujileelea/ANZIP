@@ -16,6 +16,8 @@
 		0972BE5B2B0C6B5F002A3C87 /* OutputPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0972BE5A2B0C6B5F002A3C87 /* OutputPage.swift */; };
 		0972BE5D2B0C6B66002A3C87 /* CollectPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0972BE5C2B0C6B66002A3C87 /* CollectPage.swift */; };
 		0972BE5F2B0C86ED002A3C87 /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0972BE5E2B0C86ED002A3C87 /* Graph.swift */; };
+		0972BE612B0DF2B1002A3C87 /* Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0972BE602B0DF2B1002A3C87 /* Info.swift */; };
+		0972BE632B0DF2B9002A3C87 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0972BE622B0DF2B9002A3C87 /* Review.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +31,8 @@
 		0972BE5A2B0C6B5F002A3C87 /* OutputPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputPage.swift; sourceTree = "<group>"; };
 		0972BE5C2B0C6B66002A3C87 /* CollectPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectPage.swift; sourceTree = "<group>"; };
 		0972BE5E2B0C86ED002A3C87 /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
+		0972BE602B0DF2B1002A3C87 /* Info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Info.swift; sourceTree = "<group>"; };
+		0972BE622B0DF2B9002A3C87 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,8 +68,8 @@
 				0972BE452B0C69C7002A3C87 /* ANZIPApp.swift */,
 				0972BE492B0C69C9002A3C87 /* Assets.xcassets */,
 				0972BE552B0C69FA002A3C87 /* Utils */,
-				0972BE542B0C69F5002A3C87 /* View */,
 				0972BE532B0C69ED002A3C87 /* Model */,
+				0972BE542B0C69F5002A3C87 /* View */,
 				0972BE4B2B0C69C9002A3C87 /* Preview Content */,
 			);
 			path = ANZIP;
@@ -82,6 +86,8 @@
 		0972BE532B0C69ED002A3C87 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0972BE602B0DF2B1002A3C87 /* Info.swift */,
+				0972BE622B0DF2B9002A3C87 /* Review.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -177,6 +183,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0972BE5B2B0C6B5F002A3C87 /* OutputPage.swift in Sources */,
+				0972BE612B0DF2B1002A3C87 /* Info.swift in Sources */,
+				0972BE632B0DF2B9002A3C87 /* Review.swift in Sources */,
 				0972BE5D2B0C6B66002A3C87 /* CollectPage.swift in Sources */,
 				0972BE5F2B0C86ED002A3C87 /* Graph.swift in Sources */,
 				0972BE572B0C6B4F002A3C87 /* EntryPage.swift in Sources */,

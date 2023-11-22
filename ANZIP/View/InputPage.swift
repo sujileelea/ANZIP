@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 enum Weekday: String, CaseIterable {
     
     case sun = "SUN", mon = "MON", tue = "TUE", wed = "WED", thu = "THU", fri = "FRI", sat = "SAT"
@@ -39,8 +38,11 @@ enum Weekday: String, CaseIterable {
 }
 
 struct InputPage: View {
+    
+    @State var info: Info?
+    @State var isFetchingData = false
 
-    @State var selectedDayString: String = Weekday.mon.rawValue
+    @State var selectedDayString: String
     
     @State var selectedTime: Date = Date()
     @State var selectedTimeString: String = ""
@@ -49,6 +51,22 @@ struct InputPage: View {
     
     let buttonWidth: CGFloat = screenWidth * 0.9
     let buttonHeight: CGFloat = 80
+    
+    init() {
+        // 현재 날짜를 가져옵니다.
+        let today = Date()
+        
+        // Calendar를 사용하여 현재 요일을 구합니다.
+        let weekdayNumber = Calendar.current.component(.weekday, from: today)
+        
+        // Weekday 열거형을 배열로 만들고, 요일 순서에 맞게 정렬합니다.
+        let weekdays = Weekday.allCases
+        // Swift의 Calendar는 일요일을 1로 시작합니다. 배열 인덱스는 0부터 시작하므로 1을 빼줍니다.
+        let currentWeekday = weekdays[(weekdayNumber - 1) % weekdays.count]
+
+        // 현재 요일의 rawValue를 selectedDayString에 할당합니다.
+        self._selectedDayString = State(initialValue: currentWeekday.rawValue)
+    }
 
     var body: some View {
         VStack(spacing: 30) {
@@ -64,7 +82,7 @@ struct InputPage: View {
                 }
                 Spacer()
             }
-            .padding(.horizontal)
+            .padding(.leading, 20)
             .padding(.bottom, 25)
             VStack(spacing: 0) {
                 //요일 선택
@@ -108,7 +126,7 @@ struct InputPage: View {
             }
             .padding(.bottom, 40)
             //출발역 선택
-            VStack {
+            VStack(spacing: 20) {
                 Button(action: {
                     selectedSubwayStop = "어린이대공원역 7호선"
                 }, label: {
@@ -149,14 +167,23 @@ struct InputPage: View {
             .foregroundColor(.black)
         }
         .padding(.top, -30)
+        .overlay(
+            // 데이터를 가져오는 중인 경우에만 ProgressView를 표시
+            isFetchingData ? ProgressView() : nil
+        )
         .toolbar(content: {
             ToolbarItem(placement: .topBarTrailing, content: {
                 NavigationLink(destination: {
-                    OutputPage(selectedDayString: $selectedDayString, selectedTimeString: $selectedTimeString, selectedSubwayStop: $selectedSubwayStop)
+                    OutputPage(info: $info, selectedDayString: $selectedDayString, selectedTimeString: $selectedTimeString, selectedSubwayStop: $selectedSubwayStop)
                 }, label: {
-                    Text("앉을 확률 분석하기")
-                        .font(.system(size: 17, weight: .medium))
-                        .foregroundStyle(Color.blue)
+                    if !isFetchingData {
+                        Text("앉을 확률 분석하기")
+                            .font(.system(size: 17, weight: .medium))
+                            .foregroundStyle(Color.blue)
+                            .onTapGesture {
+                                fetchDataFromServer()
+                            }
+                    }
                 })
             })
         })
@@ -191,6 +218,47 @@ struct InputPage: View {
         formatter.dateFormat = "HH시 mm분"
         selectedTimeString = formatter.string(from: selectedTime)
     }
+    
+    // 서버로 데이터를 비동기적으로 요청하고 처리하는 함수
+    func fetchDataFromServer() {
+            // 비동기적으로 데이터를 가져오는 중임을 표시
+            isFetchingData = true
+        
+           // 실제 서버 URL을 사용하려면 여기에 해당 URL을 입력하세요.
+           let serverURL = URL(string: "https://example.com/api")!
+
+           // POST 요청을 위한 URLRequest 생성
+           var request = URLRequest(url: serverURL)
+           request.httpMethod = "GET"
+
+           // JSON 데이터를 생성하여 요청 바디에 추가
+            do {
+                let jsonData = try JSONEncoder().encode(info)
+                request.httpBody = jsonData
+                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            } catch {
+            }
+
+           // 서버로 요청을 보내고 응답 처리
+           URLSession.shared.dataTask(with: request) { data, response, error in
+               if let data = data {
+                   do {
+                       // JSON 데이터를 Info 타입으로 파싱
+                       let decodedInfo = try JSONDecoder().decode(Info.self, from: data)
+                       DispatchQueue.main.async {
+                           // 파싱된 데이터를 상태 변수에 할당
+                           self.info = decodedInfo
+                           self.isFetchingData = false
+                       }
+                   } catch {
+                       print("Error decoding JSON data: \(error)")
+                   }
+               } else if let error = error {
+                   print("Error sending POST request: \(error)")
+               }
+           }
+           .resume()
+       }
 }
 
 #Preview {

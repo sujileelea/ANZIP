@@ -9,6 +9,8 @@ import SwiftUI
 
 
 struct OutputPage: View {
+
+    @Binding var info: Info?
     
     @Binding var selectedDayString: String
     @Binding var selectedTimeString: String

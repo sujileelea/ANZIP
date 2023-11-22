@@ -9,8 +9,8 @@ import SwiftUI
 
 struct GraphView: View {
     let data: [(String, Int)] = [("a", 1), ("b", 3), ("c", 9), ("d", 10), ("e", 5)]
-    let xAxisLength: CGFloat = 220
-    let yAxisLength: CGFloat = 190
+    let xAxisLength: CGFloat = 250
+    let yAxisLength: CGFloat = 200
     let xOffset: CGFloat = 30 // x축 좌표 간격 조정
 
     var body: some View {
