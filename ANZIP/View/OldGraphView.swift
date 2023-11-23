@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-struct GraphView: View {
-    let data: [(String, Int)] = [("a", 1), ("b", 3), ("c", 9), ("d", 10), ("e", 5)]
-    let xAxisLength: CGFloat = 250
+struct OldGraphView: View {
+    
+    let data: [(String, Int)] = [("11", 1), ("12", 3), ("13", 9), ("14", 10), ("15", 5)]
+    let xAxisLength: CGFloat = 270
     let yAxisLength: CGFloat = 200
     let xOffset: CGFloat = 30 // x축 좌표 간격 조정
 
@@ -27,7 +28,7 @@ struct GraphView: View {
             }
             .stroke(Color.hex7E7E7E, lineWidth: 0.7)
 
-            // 데이터 포인트와 선을 그립니다.
+            // 데이터 포인트와 선
             Path { path in
                 for (index, dataPoint) in data.enumerated() {
                     let xPosition = xOffset + 25 + xAxisLength / CGFloat(data.count) * CGFloat(index)
@@ -61,7 +62,7 @@ struct GraphView: View {
             // x축 레이블을 추가합니다.
             ForEach(data.indices, id: \.self) { index in
                 Text(data[index].0)
-                    .position(x: xOffset + 25 + xAxisLength / CGFloat(data.count) * CGFloat(index), y: yAxisLength + 20)
+                    .position(x: xOffset + 30 + xAxisLength / CGFloat(data.count) * CGFloat(index), y: yAxisLength + 20)
             }
 
             // y축 레이블을 추가합니다.
@@ -71,7 +72,7 @@ struct GraphView: View {
             }
         }
         .frame(width: xAxisLength + xOffset * 2, height: yAxisLength + 40) // 그래프 크기 조정
-        .padding(.leading, 40) // y축 레이블을 위한 공간 추가
+        .padding(.leading, 10) // y축 레이블을 위한 공간 추가
     }
 
     func colorForValue(_ value: Int) -> Color {

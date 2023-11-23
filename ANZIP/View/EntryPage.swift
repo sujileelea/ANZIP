@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct EntryPage: View {
+    
+    @Binding var pageIndex: PageIndex
+    
     var body: some View {
-        NavigationStack {
             ZStack {
                 Image("Background")
                     .resizable()
                 VStack {
-                    NavigationLink(destination: {
-                        InputPage()
+                    Button(action: {
+                        pageIndex = .inputPage
                     }, label: {
                         HStack {
                             Text("입장하기")
@@ -29,10 +31,5 @@ struct EntryPage: View {
                 .padding(.leading, 180)
             }
             .ignoresSafeArea()
-        }
     }
-}
-
-#Preview {
-    EntryPage()
 }

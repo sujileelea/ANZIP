@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		090A45AF2B0F3B54002ABD1A /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090A45AE2B0F3B54002ABD1A /* GraphView.swift */; };
 		0972BE462B0C69C7002A3C87 /* ANZIPApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0972BE452B0C69C7002A3C87 /* ANZIPApp.swift */; };
 		0972BE482B0C69C7002A3C87 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0972BE472B0C69C7002A3C87 /* ContentView.swift */; };
 		0972BE4A2B0C69C9002A3C87 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0972BE492B0C69C9002A3C87 /* Assets.xcassets */; };
@@ -14,13 +15,15 @@
 		0972BE572B0C6B4F002A3C87 /* EntryPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0972BE562B0C6B4F002A3C87 /* EntryPage.swift */; };
 		0972BE592B0C6B58002A3C87 /* InputPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0972BE582B0C6B58002A3C87 /* InputPage.swift */; };
 		0972BE5B2B0C6B5F002A3C87 /* OutputPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0972BE5A2B0C6B5F002A3C87 /* OutputPage.swift */; };
-		0972BE5D2B0C6B66002A3C87 /* CollectPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0972BE5C2B0C6B66002A3C87 /* CollectPage.swift */; };
-		0972BE5F2B0C86ED002A3C87 /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0972BE5E2B0C86ED002A3C87 /* Graph.swift */; };
+		0972BE5D2B0C6B66002A3C87 /* CollectModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0972BE5C2B0C6B66002A3C87 /* CollectModal.swift */; };
+		0972BE5F2B0C86ED002A3C87 /* OldGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0972BE5E2B0C86ED002A3C87 /* OldGraphView.swift */; };
 		0972BE612B0DF2B1002A3C87 /* Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0972BE602B0DF2B1002A3C87 /* Info.swift */; };
 		0972BE632B0DF2B9002A3C87 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0972BE622B0DF2B9002A3C87 /* Review.swift */; };
+		0972BE672B0F1AEB002A3C87 /* CustomProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0972BE662B0F1AEB002A3C87 /* CustomProgressView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		090A45AE2B0F3B54002ABD1A /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		0972BE422B0C69C7002A3C87 /* ANZIP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ANZIP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0972BE452B0C69C7002A3C87 /* ANZIPApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANZIPApp.swift; sourceTree = "<group>"; };
 		0972BE472B0C69C7002A3C87 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -29,10 +32,11 @@
 		0972BE562B0C6B4F002A3C87 /* EntryPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryPage.swift; sourceTree = "<group>"; };
 		0972BE582B0C6B58002A3C87 /* InputPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPage.swift; sourceTree = "<group>"; };
 		0972BE5A2B0C6B5F002A3C87 /* OutputPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputPage.swift; sourceTree = "<group>"; };
-		0972BE5C2B0C6B66002A3C87 /* CollectPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectPage.swift; sourceTree = "<group>"; };
-		0972BE5E2B0C86ED002A3C87 /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
+		0972BE5C2B0C6B66002A3C87 /* CollectModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectModal.swift; sourceTree = "<group>"; };
+		0972BE5E2B0C86ED002A3C87 /* OldGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldGraphView.swift; sourceTree = "<group>"; };
 		0972BE602B0DF2B1002A3C87 /* Info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Info.swift; sourceTree = "<group>"; };
 		0972BE622B0DF2B9002A3C87 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
+		0972BE662B0F1AEB002A3C87 /* CustomProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProgressView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,9 +102,11 @@
 				0972BE472B0C69C7002A3C87 /* ContentView.swift */,
 				0972BE562B0C6B4F002A3C87 /* EntryPage.swift */,
 				0972BE582B0C6B58002A3C87 /* InputPage.swift */,
+				0972BE662B0F1AEB002A3C87 /* CustomProgressView.swift */,
 				0972BE5A2B0C6B5F002A3C87 /* OutputPage.swift */,
-				0972BE5C2B0C6B66002A3C87 /* CollectPage.swift */,
-				0972BE5E2B0C86ED002A3C87 /* Graph.swift */,
+				090A45AE2B0F3B54002ABD1A /* GraphView.swift */,
+				0972BE5C2B0C6B66002A3C87 /* CollectModal.swift */,
+				0972BE5E2B0C86ED002A3C87 /* OldGraphView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -185,9 +191,11 @@
 				0972BE5B2B0C6B5F002A3C87 /* OutputPage.swift in Sources */,
 				0972BE612B0DF2B1002A3C87 /* Info.swift in Sources */,
 				0972BE632B0DF2B9002A3C87 /* Review.swift in Sources */,
-				0972BE5D2B0C6B66002A3C87 /* CollectPage.swift in Sources */,
-				0972BE5F2B0C86ED002A3C87 /* Graph.swift in Sources */,
+				0972BE5D2B0C6B66002A3C87 /* CollectModal.swift in Sources */,
+				0972BE672B0F1AEB002A3C87 /* CustomProgressView.swift in Sources */,
+				0972BE5F2B0C86ED002A3C87 /* OldGraphView.swift in Sources */,
 				0972BE572B0C6B4F002A3C87 /* EntryPage.swift in Sources */,
+				090A45AF2B0F3B54002ABD1A /* GraphView.swift in Sources */,
 				0972BE482B0C69C7002A3C87 /* ContentView.swift in Sources */,
 				0972BE462B0C69C7002A3C87 /* ANZIPApp.swift in Sources */,
 				0972BE592B0C6B58002A3C87 /* InputPage.swift in Sources */,

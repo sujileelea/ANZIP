@@ -9,83 +9,104 @@ import SwiftUI
 
 
 struct OutputPage: View {
+    
+    @Binding var pageIndex: PageIndex
 
-    @Binding var info: Info?
+    @Binding var inputData: Input
+    @Binding var outputData: Output
     
-    @Binding var selectedDayString: String
-    @Binding var selectedTimeString: String
-    @Binding var selectedSubwayStop: String
-    
-    @State var status: String = "Good"
     @State var showEvaluationSheet: Bool = false
     
     var body: some View {
-        VStack {
-            //헤더
-            VStack(alignment: .leading, spacing: 4) {
+        NavigationStack {
+            VStack {
+                //헤더
                 HStack {
-                    KoreanDayOfWeek(day: selectedDayString)
-                    Text(selectedTimeString)
-                }
-                .font(.system(size: 21, weight: .bold))
-                VStack(alignment: .leading) {
-                    Text(selectedSubwayStop + "출발 🚃")
-                }
-                .font(.system(size: 19))
-                .padding(.top, 10)
-            }
-            // 자리 지킴이
-            VStack(spacing: -2) {
-                Image(status)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 200)
-                ZStack {
-                    Image("Balloon")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 50)
-                        .offset(x: -5)
-                        .padding(.bottom, 6)
-                    VStack {
-                        if status == "Good" {
-                            Text("앉을 확률 높아요!")
-                        } else if status == "Soso" {
-                            Text("적당히 붐비네요!")
-                        } else if status == "Bad" {
-                            Text("앉을 확률 낮아요!")
+                    VStack(alignment: .leading) {
+                        HStack {
+                            KoreanDayOfWeek(day: inputData.day ?? "")
+                            Text(inputData.time ?? "")
                         }
+                        .font(.system(size: 25, weight: .bold))
+                        HStack{
+                            Text(inputData.subwayStop ?? "")
+                            Text("출발 🚃")
+                        }
+                        .font(.system(size: 22))
                     }
-                    .foregroundColor(.white)
-                    .font(.system(size: 20, weight: .bold))
-                    .offset(x: -8, y: 2)
+                    Spacer()
                 }
+                .padding(.leading, 20)
+                .padding(.bottom, 25)
+                // 자리 지킴이
+                VStack(spacing: -10) {
+                    if let status = outputData.status {
+                        Image(status)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 110)
+                    }
+                    ZStack {
+                        Image("Balloon")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 50)
+                            .padding(.bottom, 6)
+                        VStack {
+                            if outputData.status == "good" {
+                                Text("앉을 확률 높아요!")
+                            } else if outputData.status == "soso" {
+                                Text("적당히 붐비네요!")
+                            } else if outputData.status == "bad" {
+                                Text("앉을 확률 낮아요!")
+                            }
+                        }
+                        .offset(x: 10)
+                        .foregroundColor(.white)
+                        .font(.system(size: 20, weight: .bold))
+                    }
+                }
+                VStack {
+                    TagMessage(status: outputData.status ?? "")
+                        .padding(.bottom, 40)
+                        .padding(.leading, 2)
+                }
+                // 그래프
+                VStack {
+                    GraphView()
+                }
+                .padding(.vertical, 10)
+                // 평가 버튼
+                Button(action: {
+                    showEvaluationSheet = true
+                }, label: {
+                    RoundedRectangle(cornerRadius: 20)
+                        .foregroundColor(.hexFFA800)
+                        .frame(width: screenWidth * 0.8, height: 50)
+                        .overlay (
+                            Text("결과 평가하기")
+                                .font(.system(size: 16, weight: .semibold))
+                                .foregroundColor(.white)
+                        )
+                })
             }
-            VStack {
-                TagMessage(status: status)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading, content: {
+                    Button(action: {
+                        pageIndex = .inputPage
+                    }, label: {
+                        Text("뒤로 가기")
+                            .font(.system(size: 18, weight: .medium))
+                            .foregroundStyle(Color.gray)
+                    })
+                })
             }
-            .padding(.bottom, 30)
-            // 그래프
-            VStack {
-                GraphView()
-            }
-            .padding(.bottom, 10)
-            // 평가 버튼
-            Button(action: {
-                showEvaluationSheet = true
-            }, label: {
-                RoundedRectangle(cornerRadius: 20)
-                    .foregroundColor(.hexFFA800)
-                    .frame(width: screenWidth * 0.7, height: 50)
-                    .overlay (
-                        Text("결과 평가하기")
-                            .font(.system(size: 16, weight: .semibold))
-                            .foregroundColor(.white)
-                    )
-            })
         }
+        .padding(.top)
         .sheet(isPresented: $showEvaluationSheet, content: {
-            CollectPage(showEvaluationSheet: $showEvaluationSheet)
+            CollectModal(showEvaluationSheet: $showEvaluationSheet)
+                .presentationDragIndicator(.visible)
+                .presentationDetents([.large, .fraction(0.8)])
         })
     }
     
@@ -111,22 +132,22 @@ struct OutputPage: View {
     @ViewBuilder
     func TagMessage(status: String) -> some View {
         VStack {
-            if status == "Good" {
+            if status == "good" {
                 Text("""
                     # 자리 골라앉기
                     # 창밖 구경
                     # 집은 이 시간에
                 """)
-            } else if status == "Soso" {
+            } else if status == "soso" {
                 Text("""
                      # 호다닥 조심조심
                      # 궁둥이 들이밀기
                      # 매너있게 들이밀기
                 """)
-            } else if status == "Bad" {
+            } else if status == "bad" {
                 Text("""
                 # 이 시간은 피해요
-                # 가방 앞으로 매기
+                # 가방 앞으로 메기
                 # 조금만 참아요
                 """)
             }
