@@ -58,6 +58,9 @@ struct InputPage: View {
     let buttonWidth: CGFloat = screenWidth * 0.9
     let buttonHeight: CGFloat = 53
     
+    let startTime: Date
+    let endTime: Date
+    
     init(pageIndex: Binding<PageIndex>, inputData: Binding<Input>, outputData: Binding<Output>) {
         self._pageIndex = pageIndex
         
@@ -81,6 +84,19 @@ struct InputPage: View {
         
         // 현재 요일의 rawValue를 selectedDayString에 할당합니다.
         self._selectedDayString = State(initialValue: currentWeekday.rawValue)
+        
+        // 6:00 AM과 자정을 나타내는 Date 객체 생성
+        let calendar = Calendar.current
+        self.startTime = calendar.date(bySettingHour: 6, minute: 0, second: 0, of: Date())!
+        self.endTime = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: Date())!
+
+        // 현재 시간이 선택 범위 내에 있는지 확인하고, 아니면 6:00 AM으로 설정
+        let currentTime = Date()
+        if currentTime < startTime || currentTime > endTime {
+            self._selectedTime = State(initialValue: startTime)
+        } else {
+            self._selectedTime = State(initialValue: currentTime)
+        }
     }
 
     var body: some View {
@@ -150,7 +166,7 @@ struct InputPage: View {
                             .stroke(Color.black, lineWidth: 2)
                             .frame(width: 155, height: 60)
                             .overlay(alignment: .bottom, content: {
-                                Text("6:00부터 23:00까지 선택 가능")
+                                Text("6:30부터 23:00까지 선택 가능")
                                     .font(.system(size: 11))
                                     .foregroundStyle(Color.hex7E7E7E)
                                     .offset(x:1, y: 16)
@@ -158,11 +174,6 @@ struct InputPage: View {
                             .overlay {
                                 HStack {
                                     Text("⏰")
-                                    // 6:00 과 23:00 을 나타내는 Date 객체 생성
-                                    let calendar = Calendar.current
-                                    let startTime = calendar.date(bySettingHour: 6, minute: 0, second: 0, of: Date())!
-                                    let endTime = calendar.date(bySettingHour: 23, minute: 0, second: 0, of: Date())!
-
                                     // DatePicker의 시간 범위 설정
                                     DatePicker("시간 선택", selection: $selectedTime, in: startTime...endTime, displayedComponents: .hourAndMinute)
                                         .labelsHidden()
