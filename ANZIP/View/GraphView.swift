@@ -2,6 +2,7 @@ import SwiftUI
 
 struct GraphView: View {
     
+    let targetTime: String
     let data: [(String, Int)]
     let xAxisLength: CGFloat = 315
     let yAxisLength: CGFloat = 220
@@ -43,6 +44,21 @@ struct GraphView: View {
                   }
                   .stroke(Color.gray.opacity(0.5), style: StrokeStyle(lineWidth: 1, lineCap: .round, dash: [5, 5]))
               }
+            
+            // targetTime이 포함된 시간 구간 강조
+            if let targetHour = Int(targetTime.split(separator: ":")[0]) {
+                let xPositionStart = xOffset + 30 + xAxisLength / CGFloat(data.count + 1) * CGFloat(targetHour - Int(data.first!.0)!)
+                let xPositionEnd = xOffset + 30 + xAxisLength / CGFloat(data.count + 1) * CGFloat(targetHour + 1 - Int(data.first!.0)!)
+
+                Path { path in
+                    path.move(to: CGPoint(x: xPositionStart, y: 0))
+                    path.addLine(to: CGPoint(x: xPositionStart, y: yAxisLength))
+                    path.addLine(to: CGPoint(x: xPositionEnd, y: yAxisLength))
+                    path.addLine(to: CGPoint(x: xPositionEnd, y: 0))
+                    path.closeSubpath()
+                }
+                .stroke(Color.black, lineWidth: 2)
+            }
 
             // 데이터 값 라벨 추가
             ForEach(data, id: \.0) { dataPoint in

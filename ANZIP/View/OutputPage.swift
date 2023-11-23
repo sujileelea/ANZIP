@@ -75,12 +75,12 @@ struct OutputPage: View {
                 VStack {
                     TagMessage(status: outputData.status ?? "")
                         .padding(.bottom, 40)
-                        .padding(.leading, -10)
+                        .padding(.leading, -5)
                 }
                 // 그래프
                 VStack {
                     let outputDataArray: [(String, Int)] = outputData.data?.map { ($0.startTime, $0.score) } ?? []
-                    GraphView(data: outputDataArray)
+                    GraphView(targetTime: inputData.time ?? "", data: outputDataArray)
                 }
                 .padding(.vertical, 10)
                 // 평가 버튼
@@ -89,7 +89,7 @@ struct OutputPage: View {
                 }, label: {
                     RoundedRectangle(cornerRadius: 20)
                         .foregroundColor(.hexFFA800)
-                        .frame(width: screenWidth * 0.8, height: 50)
+                        .frame(width: screenWidth * 0.86, height: 50)
                         .overlay (
                             Text("결과 평가하기")
                                 .font(.system(size: 16, weight: .semibold))
