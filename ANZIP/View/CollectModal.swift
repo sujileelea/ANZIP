@@ -9,6 +9,11 @@ import SwiftUI
 
 struct CollectModal: View {
     
+    enum FocusTextEditor: Hashable {
+       case textEditor
+     }
+    @FocusState private var focusTextEditor: FocusTextEditor?
+    
     @State var review: Review = Review()
     @State var isPostingData = false
 
@@ -16,6 +21,7 @@ struct CollectModal: View {
     @State var comments: String = ""
     
     @Binding var showEvaluationSheet: Bool
+    @State var showAlert: Bool = false
 
     var body: some View {
         NavigationStack {
@@ -33,7 +39,6 @@ struct CollectModal: View {
                 .padding(.leading, 10)
                 //별
                 HStack(spacing: -5) {
-                    
                     ForEach(0..<5) { index in
                         Button(action: {
                             withAnimation(.easeInOut(duration: -1)) {
@@ -65,6 +70,7 @@ struct CollectModal: View {
                     }
                     //입력창
                     TextEditor(text: $comments)
+                        .focused($focusTextEditor, equals: .textEditor)
                         .frame(width: screenWidth * 0.85, height: 170)
                         .padding(5)
                         .overlay {
@@ -111,6 +117,19 @@ struct CollectModal: View {
                 })
             })
         }
+        .onAppear {
+          self.focusTextEditor = .textEditor
+        }
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("리뷰 저장"),
+                message: Text("소중한 의견 감사합니다 😽"),
+                dismissButton: .default(Text("확인")) {
+                    showAlert = false
+                    showEvaluationSheet = false
+                }
+            )
+        }
     }
     
     func postDataToServer(reviewToPost: Review) {
@@ -136,8 +155,8 @@ struct CollectModal: View {
            // 서버로 요청을 보내고 응답 처리
            URLSession.shared.dataTask(with: request) { data, response, error in
                if let data = data {
-                   showEvaluationSheet = false
                    print("응답 데이터 : ", data)
+                   showAlert = true
                } else if let error = error {
                    print("Error sending POST request: \(error)")
                }

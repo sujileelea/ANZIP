@@ -27,7 +27,7 @@ struct CustomProgressView: View {
                  }
          }
          .frame(width: screenWidth, height: screenHeight)
-         .background(Color.white.opacity(0.8))
+         .background(Color.white.opacity(0.94))
      }
 }
 

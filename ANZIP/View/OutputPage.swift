@@ -115,7 +115,7 @@ struct OutputPage: View {
         .sheet(isPresented: $showEvaluationSheet, content: {
             CollectModal(showEvaluationSheet: $showEvaluationSheet)
                 .presentationDragIndicator(.visible)
-                .presentationDetents([.large, .fraction(0.8)])
+//                .presentationDetents([.large, .fraction(0.8)])
         })
     }
     

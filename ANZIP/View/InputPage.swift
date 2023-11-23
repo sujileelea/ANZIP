@@ -128,8 +128,8 @@ struct InputPage: View {
                     HStack(spacing: 35) {
                         // 월 선택
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.hex7E7E7E, lineWidth: 0.5)
-                            .frame(width: 150, height: 60)
+                            .stroke(Color.black, lineWidth: 2)
+                            .frame(width: 155, height: 60)
                             .overlay {
                                 Menu(content: {
                                     ForEach(1...12, id: \.self) { month in
@@ -147,12 +147,24 @@ struct InputPage: View {
                             }
                         //시간 선택
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.hex7E7E7E, lineWidth: 0.5)
-                            .frame(width: 150, height: 60)
+                            .stroke(Color.black, lineWidth: 2)
+                            .frame(width: 155, height: 60)
+                            .overlay(alignment: .bottom, content: {
+                                Text("6:00부터 23:00까지 선택 가능")
+                                    .font(.system(size: 11))
+                                    .foregroundStyle(Color.hex7E7E7E)
+                                    .offset(x:1, y: 16)
+                            })
                             .overlay {
                                 HStack {
                                     Text("⏰")
-                                    DatePicker("시간 선택", selection: $selectedTime, displayedComponents: .hourAndMinute)
+                                    // 6:00 과 23:00 을 나타내는 Date 객체 생성
+                                    let calendar = Calendar.current
+                                    let startTime = calendar.date(bySettingHour: 6, minute: 0, second: 0, of: Date())!
+                                    let endTime = calendar.date(bySettingHour: 23, minute: 0, second: 0, of: Date())!
+
+                                    // DatePicker의 시간 범위 설정
+                                    DatePicker("시간 선택", selection: $selectedTime, in: startTime...endTime, displayedComponents: .hourAndMinute)
                                         .labelsHidden()
                                         .datePickerStyle(.automatic)
                                         .onChange(of: selectedTime, {
@@ -270,7 +282,7 @@ struct InputPage: View {
                     }, label: {
                         if !isFetchingData {
                             Text("앉을 확률 분석하기")
-                                .font(.system(size: 19, weight: .semibold))
+                                .font(.system(size: 17, weight: selectedSubwayStop == "" ? .medium : .bold))
                                 .foregroundStyle(selectedSubwayStop == "" ? Color.hex7E7E7E :Color.hexFFA800)
                         }
                     })
@@ -307,7 +319,14 @@ struct InputPage: View {
     private func updateTimeString() {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
-        selectedTimeString = formatter.string(from: selectedTime)
+        var timeString = formatter.string(from: selectedTime)
+
+        // 시간 부분의 첫 번째 문자가 '0'인 경우 제거
+        if timeString.hasPrefix("0") {
+            timeString.removeFirst()
+        }
+
+        selectedTimeString = timeString
     }
     
     // 서버로 데이터를 비동기적으로 요청하고 처리하는 함수
