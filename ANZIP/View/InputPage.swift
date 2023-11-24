@@ -157,7 +157,8 @@ struct InputPage: View {
                                     HStack {
                                         Text("🗓️")
                                         Text("\(selectedMonth)월")
-                                            .font(.system(size: 20))
+                                            .font(.system(size: 18))
+                                            .frame(width: 80)
                                     }
                                 })
                             }
